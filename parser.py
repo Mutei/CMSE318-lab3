@@ -1,74 +1,19 @@
-error = False
-next_token = ""
+def G():
+    lex()
+    print("G -> E")
+    E()
+    if(next_token == "$" and not error):
+        print("success")
+    else:
+        print("failure: unconsumed input: ", unconsumed_input())
 
-def lex():
-    for i in range(1,7):
-        fname = "f"+str(i)+".txt"
-        my_file = open(fname,"r")
-        for line in my_file:
-            for character in line:
-                if character == " ":
-                    continue
-                next_token = character
-                return next_token
-
-def unconsumed_input():
-    pass
-
-def N():
+def E():
     global error
     if error:
         return
-    if next_token >= 0 and next_token <= 9:
-        print("N -> "+str(next_token))
-        lex()
-    else:
-        error = True
-        print("error: unexptected token ", next_token)
-        print("unconsumed_input ", unconsumed_input())
-        return
-
-def F():
-    print(next_token)
-    global error
-    if error:
-        return
-    if next_token == "(":
-        print("F -> (E)")
-        lex()
-        E()
-        if next_token == ")":
-            lex()
-        else:
-            error = True
-            print("error: unexptected token ", next_token)
-            print("unconsumed_input ", unconsumed_input())
-            return
-    elif next_token >= 0 and next_token <= 9:
-        print("F -> N")
-        N()
-    else:
-        error = True
-        print("error: unexptected token ", next_token)
-        print("unconsumed_input ", unconsumed_input())
-        return
-
-def S():
-    global error
-    if error == True:
-        return
-    if next_token == "*":
-        print("S -> * F S")
-        lex()
-        F()
-        S()
-    elif next_token == "/":
-        print("S -> / F S")
-        lex()
-        F()
-        S()
-    else:
-        print("S -> e")
+    print("E -> T R")
+    T()
+    R()
 
 def T():
     global error
@@ -95,17 +40,91 @@ def R():
     else:
         print("R -> e")
 
-def E():
+def F():
     global error
     if error:
         return
-    print("E -> T R")
-    T()
-    R()
+    if next_token == "(":
+        print("F -> (E)")
+        lex()
+        E()
+        if next_token == ")":
+            lex()
+        else:
+            error = True
+            print("error: unexptected token ", next_token)
+            print("unconsumed_input: ", unconsumed_input())
+            return
+    elif next_token == '0' or next_token == '1' or next_token == '2' or next_token == '3' or next_token == '4' or next_token == '5'or next_token == '6' or next_token == '7' or next_token == '8' or next_token == '9':
+        print("F -> N")
+        N()
+    else:
+        error = True
+        print("error: unexptected token ", next_token)
+        print("unconsumed_input: ", unconsumed_input())
+        return
 
-def G():
-    lex()
-    print("G -> E")
-    E()
+def S():
+    global error
+    if error == True:
+        return
+    if next_token == "*":
+        print("S -> * F S")
+        lex()
+        F()
+        S()
+    elif next_token == "/":
+        print("S -> / F S")
+        lex()
+        F()
+        S()
+    else:
+        print("S -> e")
 
-G()
+def N():
+    global error
+    if error:
+        return
+    if next_token == '0' or next_token == '1' or next_token == '2' or next_token == '3' or next_token == '4' or next_token == '5'or next_token == '6' or next_token == '7' or next_token == '8' or next_token == '9':
+        print("N -> "+str(next_token))
+        lex()
+    else:
+        error = True
+        print("error: unexptected token ", next_token)
+        print("unconsumed_input: ", unconsumed_input())
+        return
+
+def lex():
+    char = myfile.read(1)
+    if (char !='\n' and char != ' '):
+        global next_token
+        next_token = char
+        pop_char()
+        print(char)
+    else:
+        lex()
+            
+#Return unconsumed String        
+def unconsumed_input():
+    return ''.join(character_list)
+
+#Pops the first charcater fromn the list        
+def pop_char():
+    character_list.pop(0)
+
+
+error = False
+next_token = ""
+
+file_list = ["d:/coding/python coding/cmpe410 labs/lab3/f1.txt","d:/coding/python coding/cmpe410 labs/lab3/f2.txt",
+                 "d:/coding/python coding/cmpe410 labs/lab3/f3.txt","d:/coding/python coding/cmpe410 labs/lab3/f4.txt",
+                 "d:/coding/python coding/cmpe410 labs/lab3/f5.txt","d:/coding/python coding/cmpe410 labs/lab3/f6.txt",
+                 "d:/coding/python coding/cmpe410 labs/lab3/f7.txt","d:/coding/python coding/cmpe410 labs/lab3/f8.txt",
+                 "d:/coding/python coding/cmpe410 labs/lab3/f9.txt","d:/coding/python coding/cmpe410 labs/lab3/f10.txt"]
+
+for file in file_list:
+    myfile = open(file,"r")
+    character_list = [ch for ch in open(file).read() if ch != '\n' if ch != ' ']
+    G()
+    print()
+
