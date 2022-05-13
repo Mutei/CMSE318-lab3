@@ -116,11 +116,11 @@ def pop_char():
 error = False
 next_token = ""
 
-file_list = ["d:/coding/python coding/cmpe410 labs/lab3/f1.txt","d:/coding/python coding/cmpe410 labs/lab3/f2.txt",
-                 "d:/coding/python coding/cmpe410 labs/lab3/f3.txt","d:/coding/python coding/cmpe410 labs/lab3/f4.txt",
-                 "d:/coding/python coding/cmpe410 labs/lab3/f5.txt","d:/coding/python coding/cmpe410 labs/lab3/f6.txt",
-                 "d:/coding/python coding/cmpe410 labs/lab3/f7.txt","d:/coding/python coding/cmpe410 labs/lab3/f8.txt",
-                 "d:/coding/python coding/cmpe410 labs/lab3/f9.txt","d:/coding/python coding/cmpe410 labs/lab3/f10.txt"]
+file_list = ["D:/lab3/f1.txt","D:/lab3/f2.txt",
+                 "D:/lab3/f3.txt","D:/lab3/f4.txt",
+                 "D:/lab3/f5.txt","D:/lab3/f6.txt",
+                 "D:/lab3/f7.txt","D:/lab3/f8.txt",
+                 "D:/lab3/f9.txt","D:/lab3/f10.txt"]
 
 for file in file_list:
     myfile = open(file,"r")
